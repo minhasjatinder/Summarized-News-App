@@ -52,7 +52,7 @@ def fetch_news_poster(poster_link):
         image = Image.open(io.BytesIO(raw_data))
         st.image(image, use_column_width=True)
     except:
-        image = Image.open('./Meta/no_image.jpg')
+        image = Image.open('/app/summarized-news-app/InNews-master/InNews-master/no_image.jpg')
         st.image(image, use_column_width=True)
 
 
