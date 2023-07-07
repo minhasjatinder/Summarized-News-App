@@ -52,7 +52,7 @@ def fetch_news_poster(poster_link):
         image = Image.open(io.BytesIO(raw_data))
         st.image(image, use_column_width=True)
     except:
-        image = Image.open('./Meta/no_image.jpg')
+        image = Image.open('/app/summarized-news-app/InNews-master/InNews-master/no_image.jpg')
         st.image(image, use_column_width=True)
 
 
@@ -101,7 +101,7 @@ def display_news(list_of_news, news_quantity):
 
 def run():
     st.title("RapidFire🔥: Summarised News📰")
-    image = Image.open('./Meta/newspaper.png')
+    image = Image.open('/app/summarized-news-app/InNews-master/InNews-master/newspaper.png')
 
     col1, col2, col3 = st.columns([3, 5, 3])
 
