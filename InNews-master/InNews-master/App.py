@@ -4,10 +4,10 @@ from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen
 from newspaper import Article
 import io
-from googletrans import Translator
+from translate import Translator
 
   
-translator = Translator()  
+
 
 import nltk
 nltk.download('punkt')
@@ -52,7 +52,7 @@ def fetch_news_poster(poster_link):
         image = Image.open(io.BytesIO(raw_data))
         st.image(image, use_column_width=True)
     except:
-        image = Image.open('/app/summarized-news-app/InNews-master/InNews-master/no_image.jpg')
+        image = Image.open('./Meta/no_image.jpg')
         st.image(image, use_column_width=True)
 
 
@@ -76,17 +76,21 @@ def display_news(list_of_news, news_quantity):
                 unsafe_allow_html=True)
             st.markdown("[Read more at {}...]({})".format(news.source.text, news.link.text))
 
-            languages = ['Punjabi', 'English', 'Hindi']
-            selected_language = st.selectbox('Translate to:', languages, key= c)
-            if st.button("Translate" , key = c+100):
-                if selected_language == 'Punjabi':
-                    translation = translator.translate(news_data.summary, dest='pa')
-                elif selected_language == 'English':
-                    translation = translator.translate(news_data.summary, dest ='en')
-                elif selected_language == 'Hindi':
-                    translation = translator.translate(news_data.summary, dest='hi')
-                translated_summary = translation.text
-                
+            languages = {'Punjabi': 'pa', 'English': 'en', 'Hindi': 'hi'}
+            selected_language = st.selectbox('Translate to:', list(languages.keys()), key=c)
+            if st.button("Translate", key=c + 100):
+                translator = Translator(to_lang=languages[selected_language])
+                summary = news_data.summary
+
+    # Split summary into chunks of maximum 500 characters
+                chunks = [summary[i:i+500] for i in range(0, len(summary), 500)]
+    
+    # Translate each chunk individually
+                translated_chunks = [translator.translate(chunk) for chunk in chunks]
+
+    # Combine translated chunks into a single translated summary
+                translated_summary = ' '.join(translated_chunks)
+    
                 st.markdown(
                     '''<h6 style='text-align: justify;'>{}"</h6>'''.format(translated_summary),
                     unsafe_allow_html=True)
@@ -97,7 +101,7 @@ def display_news(list_of_news, news_quantity):
 
 def run():
     st.title("RapidFire🔥: Summarised News📰")
-    image = Image.open('/app/summarized-news-app/InNews-master/InNews-master/Meta/newspaper.png')
+    image = Image.open('./Meta/newspaper.png')
 
     col1, col2, col3 = st.columns([3, 5, 3])
 
