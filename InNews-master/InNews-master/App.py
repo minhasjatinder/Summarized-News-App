@@ -6,7 +6,6 @@ from newspaper import Article
 import io
 from translate import Translator
 
-  
 
 
 import nltk
