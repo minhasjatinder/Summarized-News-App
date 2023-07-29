@@ -11,6 +11,7 @@ from translate import Translator
 import nltk
 nltk.download('punkt')
 
+
 st.set_page_config(page_title='NewsRapidFire🔥 :A Summarised News📰 Portal', page_icon='./Meta/newspaper.ico')
 
 
