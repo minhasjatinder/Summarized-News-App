@@ -109,7 +109,7 @@ def run():
         st.write("")
 
     with col2:
-        st.image(image, use_column_width=False)
+        st.write("")
 
     with col3:
         st.write("")
